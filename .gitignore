@@ -1,0 +1,7 @@
+.DS_Store
+venv/
+.idea/
+__pycache__/
+travelando/__pycache__/
+knowledge_graph_data_layer/__pycache__/
+db.sqlite3
