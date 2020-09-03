@@ -13,7 +13,7 @@ from xml.etree import cElementTree as ElementTree
 import xmltodict
 
 
-KNOWLEDGE_GRAPH_POSITION = "http://3.250.48.209:8080/rdf4j-workbench/repositories/1/query?"
+KNOWLEDGE_GRAPH_POSITION = "http://52.17.47.46:8080/rdf4j-workbench/repositories/1/query?"
 
 
 def get_query_results(r):
