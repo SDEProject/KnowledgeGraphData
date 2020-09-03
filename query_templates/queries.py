@@ -2,7 +2,9 @@ from datetime import datetime
 
 
 def query_3(comune, checkin):
+    print('in query')
     date_time_obj = datetime.strptime(checkin, '%Y-%m-%dT%H:%M:%S+02:00')  # 2020-08-21T14:30:00+02:00
+    print('here')
     # print(date_time_obj)
     # print(date_time_obj.hour)
     # print(date_time_obj.minute)
