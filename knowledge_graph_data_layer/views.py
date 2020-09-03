@@ -54,6 +54,7 @@ class QueriesView(View):
             checkin = parameters.get('checkin', None)
             comune = parameters.get('comune', None)
             print('calling 3')
+            print(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
             r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
             print(r)
             print('retrieve results')
