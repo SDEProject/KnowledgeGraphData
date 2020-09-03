@@ -1,10 +1,6 @@
 from datetime import datetime
 
 
-def query_2(stop):
-    return "http://localhost:8080/rdf4j-workbench/repositories/1/query?action=exec&queryLn=SPARQL&query=PREFIX%20ontology%3A%3Chttp%3A%2F%2Fwww.semanticweb.org%2Faleca%2Fontologies%2F2019%2F10%2Funtitled-ontology-10%23%3E%0APREFIX%20rdf%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT%20DISTINCT%20%3Fenum%0AWHERE%20%7B%0A%20%20%20%20%3Fp%20a%20ontology%3AStop%20.%0A%20%20%20%20%3Fp%20ontology%3AStopName%20%3Fvalue%20.%0A%20%20%20%20FILTER%20regex(str(%3Fvalue)%2C%20%22{}%22)%20.%0A%20%20%20%20%3FstopTime%20ontology%3AhasStop%20%3Fp%20.%0A%20%20%20%20%3Ftrip%20ontology%3AhasStopTimes%20%3FstopTime%20.%0A%20%20%20%20%3Ftrip%20ontology%3AhasRoutes%20%3Froute%20.%0A%20%20%20%20%3Froute%20ontology%3AhasTransportEnum%20%3Fenum%20.%0A%7D%0A&limit_query=0&infer=true&".format(stop)
-
-
 def query_3(comune, checkin):
     date_time_obj = datetime.strptime(checkin, '%Y-%m-%dT%H:%M:%S+02:00')  # 2020-08-21T14:30:00+02:00
     # print(date_time_obj)

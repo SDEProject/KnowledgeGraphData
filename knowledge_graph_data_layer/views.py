@@ -13,15 +13,17 @@ from xml.etree import cElementTree as ElementTree
 import xmltodict
 
 
-KNOWLEDGE_GRAPH_POSITION = "http://localhost:8080/rdf4j-workbench/repositories/1/query?"
+KNOWLEDGE_GRAPH_POSITION = "http://3.250.48.209:8080/rdf4j-workbench/repositories/1/query?"
 
 
 def get_query_results(r):
     json_response = xmltodict.parse(r.content)
+    # print(json_response)
     results = json_response['sparql']['results']['result']
+    # print(results)
     all_res = []
     for item in results:
-        # print(item)
+        print(item)
         res_obj = {}
         for key, value in item.items():
             # print(key, value)
@@ -33,7 +35,7 @@ def get_query_results(r):
                 res_obj[p[0]] = p[1]
         # print(res_obj)
         all_res.append(res_obj)
-    print(all_res)
+    # print(all_res)
     return all_res
 
 
@@ -45,16 +47,40 @@ class QueriesView(View):
         print(parameters)
 
         query = parameters.get('query', None)
+        print(query)
         all_res = []
 
         if query == '3':
             checkin = parameters.get('checkin', None)
             comune = parameters.get('comune', None)
 
-            # print(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
             r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
             all_res = get_query_results(r)
+        elif query == '6':
+            checkin = parameters.get('checkin', None)
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_6(checkin))
+            all_res = get_query_results(r)
+        elif query == '4':
+            region = parameters.get('region', None)
+            shop_enum = parameters.get('shop_enum', None)
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_4(region, shop_enum))
+            all_res = get_query_results(r)
+        elif query == '5':
+            shop_enum = parameters.get('shop_enum', None)
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_5(shop_enum))
+            all_res = get_query_results(r)
+        elif query == '7':
+            shop_enum = parameters.get('shop_enum', None)
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_7(shop_enum))
+            all_res = get_query_results(r)
+        elif query == '9':
+            difficulty = parameters.get('path_difficulty', None)
+            print(difficulty)
+            equipment_required = 'true' if parameters.get('info_equipment', None) == 'with equipment' else 'false'
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_9(difficulty, equipment_required))
+            all_res = get_query_results(r)
 
+        print(all_res)
         response = {"results": all_res}
 
         # retrieve get parameter request.GET.get('intentName', None)
