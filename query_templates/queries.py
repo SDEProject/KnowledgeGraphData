@@ -2,9 +2,10 @@ from datetime import datetime
 
 
 def query_3(comune, checkin):
-    print(checkin)
-    date_time_obj = datetime.strptime(checkin, '%Y-%m-%dT%H:%M:%S 02:00')  # 2020-08-21T14:30:00+02:00
-    print('here')
+    try:
+        date_time_obj = datetime.strptime(checkin, '%Y-%m-%dT%H:%M:%S+02:00')  # 2020-08-21T14:30:00+02:00
+    except:
+        print('error in datetime parsing')
     # print(date_time_obj)
     # print(date_time_obj.hour)
     # print(date_time_obj.minute)
