@@ -89,9 +89,8 @@ class QueriesView(View):
                 all_res = get_query_results(r)
             elif query == '9':
                 difficulty = parameters.get('path_difficulty', None)
-                print(difficulty)
                 equipment_required = 'true' if parameters.get('info_equipment', None) == 'with equipment' else 'false'
-                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_9(difficulty[0], equipment_required))
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_9(difficulty, equipment_required))
                 all_res = get_query_results(r)
             elif query == '12':
                 r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_12())
