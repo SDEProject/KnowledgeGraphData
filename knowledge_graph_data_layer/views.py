@@ -53,60 +53,64 @@ class QueriesView(View):
         print(query)
         all_res = []
 
-        if query == '3':
-            checkin = parameters.get('checkin', None)
-            comune = parameters.get('comune', None)
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
-            all_res = get_query_results(r)
-        elif query == '6':
-            checkin = parameters.get('checkin', None)
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_6(checkin))
-            all_res = get_query_results(r)
-        elif query == '4':
-            region = parameters.get('region', None)
-            shop_enum = parameters.get('shop_enum', None)
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_4(region, shop_enum))
-            all_res = get_query_results(r)
-        elif query == '5':
-            shop_enum = parameters.get('shop_enum', None)
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_5(shop_enum))
-            all_res = get_query_results(r)
-        elif query == '7':
-            shop_enum = parameters.get('shop_enum', None)
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_7(shop_enum))
-            all_res = get_query_results(r)
-        elif query == '9':
-            difficulty = parameters.get('path_difficulty', None)
-            print(difficulty)
-            equipment_required = 'true' if parameters.get('info_equipment', None) == 'with equipment' else 'false'
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_9(difficulty[0], equipment_required))
-            all_res = get_query_results(r)
-        elif query == '12':
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_12())
-            all_res = get_query_results(r)
-        elif query == '13':
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_13())
-            all_res = get_query_results(r)
-        elif query == '14':
-            difficulty = parameters.get('path_difficulty', None)
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_14(difficulty[0]))
-            all_res = get_query_results(r)
-        elif query == '17':
-            poi_from = parameters.get('activity_poi_from', None).replace("'", "\'")
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_17(poi_from))
-            all_res = get_query_results(r)
-        elif query == '18':
-            poi_from = parameters.get('activity_poi_from', None).replace("'", "\'")
-            poi_to = parameters.get('activity_poi_to', None).replace("'", "\'")
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_18(poi_from, poi_to))
-            all_res = get_query_results(r)
-        elif query == '19':
-            try:
-                path_number = str(int(float(parameters.get('path_number', None))))
-                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_19(path_number))
+        try:
+            if query == '3':
+                checkin = parameters.get('checkin', None)
+                comune = parameters.get('comune', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
                 all_res = get_query_results(r)
-            except:
-                print('Faild to parse path number in query 19.')
+            elif query == '6':
+                checkin = parameters.get('checkin', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_6(checkin))
+                all_res = get_query_results(r)
+            elif query == '4':
+                region = parameters.get('region', None)
+                shop_enum = parameters.get('shop_enum', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_4(region, shop_enum))
+                all_res = get_query_results(r)
+            elif query == '5':
+                shop_enum = parameters.get('shop_enum', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_5(shop_enum))
+                all_res = get_query_results(r)
+            elif query == '7':
+                shop_enum = parameters.get('shop_enum', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_7(shop_enum))
+                all_res = get_query_results(r)
+            elif query == '9':
+                difficulty = parameters.get('path_difficulty', None)
+                print(difficulty)
+                equipment_required = 'true' if parameters.get('info_equipment', None) == 'with equipment' else 'false'
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_9(difficulty[0], equipment_required))
+                all_res = get_query_results(r)
+            elif query == '12':
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_12())
+                all_res = get_query_results(r)
+            elif query == '13':
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_13())
+                all_res = get_query_results(r)
+            elif query == '14':
+                difficulty = parameters.get('path_difficulty', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_14(difficulty[0]))
+                all_res = get_query_results(r)
+            elif query == '17':
+                poi_from = parameters.get('activity_poi_from', None).replace("'", "\'")
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_17(poi_from))
+                all_res = get_query_results(r)
+            elif query == '18':
+                poi_from = parameters.get('activity_poi_from', None).replace("'", "\'")
+                poi_to = parameters.get('activity_poi_to', None).replace("'", "\'")
+                print(poi_to)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_18(poi_from, poi_to))
+                all_res = get_query_results(r)
+            elif query == '19':
+                try:
+                    path_number = str(int(float(parameters.get('path_number', None))))
+                    r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_19(path_number))
+                    all_res = get_query_results(r)
+                except:
+                    print('Faild to parse path number in query 19.')
+        except:
+            print('Error in call Knowledge Graph server.')
 
         print(all_res)
         response = {"results": all_res}
