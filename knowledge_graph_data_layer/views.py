@@ -79,8 +79,32 @@ class QueriesView(View):
             difficulty = parameters.get('path_difficulty', None)
             print(difficulty)
             equipment_required = 'true' if parameters.get('info_equipment', None) == 'with equipment' else 'false'
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_9(difficulty, equipment_required))
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_9(difficulty[0], equipment_required))
             all_res = get_query_results(r)
+        elif query == '12':
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_12())
+            all_res = get_query_results(r)
+        elif query == '13':
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_13())
+            all_res = get_query_results(r)
+        elif query == '14':
+            difficulty = parameters.get('path_difficulty', None)
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_14(difficulty[0]))
+            all_res = get_query_results(r)
+        elif query == '17':
+            poi_from = parameters.get('activity_poi_from', None)
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_17(poi_from))
+            all_res = get_query_results(r)
+        elif query == '18':
+            poi_from = parameters.get('activity_poi_from', None)
+            poi_to = parameters.get('activity_poi_to', None)
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_18(poi_from, poi_to))
+            all_res = get_query_results(r)
+        elif query == '19':
+            path_number = parameters.get('path_number', None)
+            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_19(path_number))
+            all_res = get_query_results(r)
+
 
         print(all_res)
         response = {"results": all_res}
