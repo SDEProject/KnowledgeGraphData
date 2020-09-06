@@ -101,7 +101,7 @@ class QueriesView(View):
                 all_res = get_query_results(r)
             elif query == '14':
                 difficulty = parameters.get('path_difficulty', None)
-                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_14(difficulty[0]))
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_14(difficulty))
                 all_res = get_query_results(r)
             elif query == '17':
                 poi_from = parameters.get('poi_activity_from', None)
