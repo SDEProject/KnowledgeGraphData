@@ -93,12 +93,12 @@ class QueriesView(View):
                 r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_14(difficulty[0]))
                 all_res = get_query_results(r)
             elif query == '17':
-                poi_from = parameters.get('activity_poi_from', None)
+                poi_from = parameters.get('poi_activity_from', None)
                 r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_17(poi_from))
                 all_res = get_query_results(r)
             elif query == '18':
-                poi_from = parameters.get('activity_poi_from', None)
-                poi_to = parameters.get('activity_poi_to', None)
+                poi_from = parameters.get('poi_activity_from', None)
+                poi_to = parameters.get('poi_activity_to', None)
                 print(poi_to)
                 r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_18(poi_from, poi_to))
                 all_res = get_query_results(r)
