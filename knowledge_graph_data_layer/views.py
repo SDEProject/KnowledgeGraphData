@@ -22,20 +22,23 @@ def get_query_results(r):
     results = json_response['sparql']['results']['result']
     # print(results)
     all_res = []
-    for item in results:
-        print(item)
-        res_obj = {}
-        for key, value in item.items():
-            # print(key, value)
-            for orderdict in value:
-                p = []
-                for k, v in orderdict.items():
-                    # print(k, v)
-                    p.append(v)
-                res_obj[p[0]] = p[1]
-        # print(res_obj)
-        all_res.append(res_obj)
-    # print(all_res)
+    try:
+        for item in results:
+            print(item)
+            res_obj = {}
+            for key, value in item.items():
+                # print(key, value)
+                for orderdict in value:
+                    p = []
+                    for k, v in orderdict.items():
+                        # print(k, v)
+                        p.append(v)
+                    res_obj[p[0]] = p[1]
+            # print(res_obj)
+            all_res.append(res_obj)
+        # print(all_res)
+    except:
+        print('Unable to parse results')
     return all_res
 
 
