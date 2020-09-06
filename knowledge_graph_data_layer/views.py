@@ -26,16 +26,27 @@ def get_query_results(r):
         for item in results:
             print(item)
             res_obj = {}
-            for key, value in item.items():
-                # print(key, value)
-                for orderdict in value:
+            if item != 'binding':
+                for key, value in item.items():
+                    # print(key, value)
+                    for orderdict in value:
+                        p = []
+                        for k, v in orderdict.items():
+                            # print(k, v)
+                            p.append(v)
+                        res_obj[p[0]] = p[1]
+                # print(res_obj)
+                all_res.append(res_obj)
+            else:
+                # print(dict(results))
+                for value in dict(results)['binding']:
                     p = []
-                    for k, v in orderdict.items():
+                    for k, v in value.items():
                         # print(k, v)
                         p.append(v)
                     res_obj[p[0]] = p[1]
-            # print(res_obj)
-            all_res.append(res_obj)
+                # print(res_obj)
+                all_res.append(res_obj)
         # print(all_res)
     except:
         print('Unable to parse results')
