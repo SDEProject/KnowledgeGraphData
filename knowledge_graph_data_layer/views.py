@@ -102,12 +102,12 @@ class QueriesView(View):
             all_res = get_query_results(r)
         elif query == '19':
             try:
-                path_number = str(int(parameters.get('path_number', None)))
+                path_number = str(int(float(parameters.get('path_number', None))))
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_19(path_number))
+                all_res = get_query_results(r)
             except:
                 print('Faild to parse path number in query 19.')
-            r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_19(path_number))
-            all_res = get_query_results(r)
-
+            
         print(all_res)
         response = {"results": all_res}
 
