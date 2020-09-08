@@ -5,10 +5,8 @@ def query_3(comune, checkin):
     try:
         date_time_obj = datetime.strptime(checkin, '%Y-%m-%dT%H:%M:%S+02:00')  # 2020-08-21T14:30:00+02:00
     except:
-        print('error in datetime parsing')
-    # print(date_time_obj)
-    # print(date_time_obj.hour)
-    # print(date_time_obj.minute)
+        print('Error in datetime parsing')
+        return None
     return "action=exec&queryLn=SPARQL&query=PREFIX%20ontology%3A%3Chttp%3A%2F%2Fwww.semanticweb.org%2Faleca%2Fontologies%2F2019%2F10%2Funtitled-ontology-10%23%3E%0A%0ASELECT%20%3Fname%20%3Fstarthour%20%3Fendhour%20%3Fstars%20%3Fstreet%20%3Fprovince%20%3Fnumber%20%3Flat%20%3Flon%20%3Faccommodationenum%0AWHERE%20%7B%0A%20%20%20%20%3FAccomodation%20a%20ontology%3AAccomodation%20.%0A%20%20%20%20%3FAccomodation%20ontology%3APoiName%20%3Fname%20.%0A%20%20%20%20%3FAccomodation%20ontology%3AhasAddress%20%3Faddr%20.%0A%20%20%09%3FAccomodation%20ontology%3ALatitude%20%3Flat%20.%0A%20%20%09%3FAccomodation%20ontology%3ALongitude%20%3Flon%20.%0A%20%20%09%3FAccomodation%20ontology%3AhasAccommodationEnum%20%3Faccommodationenum%20.%0A%20%20%20%20%3Faddr%20ontology%3ACity%20%27{}%27%20.%0A%20%20%20%20%3Faddr%20ontology%3AStreet%20%3Fstreet%20.%0A%20%20%09%3Faddr%20ontology%3AhasProvinceEnum%20%3Fprovince%20.%0A%20%20%20%20%3FAccomodation%20ontology%3AhasTimetable%20%3Ftt%20.%0A%20%20%20%20%3Ftt%20ontology%3AhasSchedules%20%3Fsch%20.%0A%20%20%20%20%3Fsch%20ontology%3AScheduleName%20%22checkin%22%20.%0A%20%20%20%20%3Fsch%20ontology%3AStartHour%20%3Fstarthour%20.%0A%20%20%20%20%3Fsch%20ontology%3AEndHour%20%3Fendhour%20.%0A%20%20%20%20FILTER%20(%3Fstarthour%20%3C%3D%20%27{}%3A{}%27)%0A%20%20%20%20%20%20OPTIONAL%7B%3FAccomodation%20ontology%3AStars%20%3Fstars%7D%0A%20%20OPTIONAL%7B%3Faddr%20ontology%3ANumber%20%3Fnumber%7D%0A%7D&limit_query=0&infer=true&".format(comune.lower(), date_time_obj.hour, date_time_obj.minute)
 
 

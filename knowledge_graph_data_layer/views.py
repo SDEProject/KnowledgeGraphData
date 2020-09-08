@@ -18,36 +18,26 @@ KNOWLEDGE_GRAPH_POSITION = "http://52.17.47.46:8080/rdf4j-workbench/repositories
 
 def get_query_results(r):
     json_response = xmltodict.parse(r.content)
-    # print(json_response)
     results = json_response['sparql']['results']['result']
-    # print(results)
     all_res = []
     try:
         for item in results:
-            print(item)
             res_obj = {}
             if item != 'binding':
                 for key, value in item.items():
-                    # print(key, value)
                     for orderdict in value:
                         p = []
                         for k, v in orderdict.items():
-                            # print(k, v)
                             p.append(v)
                         res_obj[p[0]] = p[1]
-                # print(res_obj)
                 all_res.append(res_obj)
             else:
-                # print(dict(results))
                 for value in dict(results)['binding']:
                     p = []
                     for k, v in value.items():
-                        # print(k, v)
                         p.append(v)
                     res_obj[p[0]] = p[1]
-                # print(res_obj)
                 all_res.append(res_obj)
-        # print(all_res)
     except:
         print('Unable to parse results')
     return all_res
@@ -56,9 +46,10 @@ def get_query_results(r):
 # Create your views here.
 class QueriesView(View):
     def get(self, request):
-        # response = {'name': 'ciao'}
         parameters = request.GET
         print(parameters)
+
+        status_code = 200
 
         query = parameters.get('query', None)
         print(query)
@@ -109,7 +100,6 @@ class QueriesView(View):
             elif query == '18':
                 poi_from = parameters.get('poi_activity_from', None)
                 poi_to = parameters.get('poi_activity_to', None)
-                print(poi_to)
                 r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_18(poi_from, poi_to))
                 all_res = get_query_results(r)
             elif query == '19':
@@ -118,14 +108,20 @@ class QueriesView(View):
                     r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_19(path_number))
                     all_res = get_query_results(r)
                 except:
-                    print('Faild to parse path number in query 19.')
+                    print('Failed to parse path number in query 19.')
+                    status_code = 500
+            else:
+                print('Query not found')
+                status_code = 404
+            print(all_res)
+            if len(all_res) > 0:
+                response = {"results": all_res}
+            else:
+                response = {'text': 'Sorry, I cannot execute your request.'}
         except:
             print('Error in call Knowledge Graph server.')
+            status_code = 500
+            response = {'text': 'I\'m having trouble in executing your request'}
 
-        print(all_res)
-        response = {"results": all_res}
-
-        # retrieve get parameter request.GET.get('intentName', None)
-        # response['fulfillmentMessages'][0]['text']['text'].append('I\'ll execute query ' + query)
-        return JsonResponse(response)
+        return JsonResponse(response, status=status_code)
 
