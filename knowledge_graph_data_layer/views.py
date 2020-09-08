@@ -40,6 +40,7 @@ def get_query_results(r):
                 all_res.append(res_obj)
     except:
         print('Unable to parse results')
+        return []
     return all_res
 
 
@@ -118,6 +119,7 @@ class QueriesView(View):
                 response = {"results": all_res}
             else:
                 response = {'text': 'Sorry, I cannot execute your request.'}
+                status_code = 404
         except:
             print('Error in call Knowledge Graph server.')
             status_code = 500

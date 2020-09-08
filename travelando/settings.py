@@ -140,7 +140,7 @@ SERVICE_BUSINESS_LOGIC_HOST = 'business-logic-search.herokuapp.com'
 
 SERVICE_PROCESS_CENTRIC = 'process_search'
 SERVICE_PROCESS_CENTRIC_PORT = 80
-SERVICE_PROCESS_CENTRIC_HOST = 'process-centri-search.herokuapp.com'
+SERVICE_PROCESS_CENTRIC_HOST = 'process-centric-search.herokuapp.com'
 
 SERVICE_KNOWLEDGE = 'knowledge_graph'
 SERVICE_KNOWLEDGE_PORT = 80
