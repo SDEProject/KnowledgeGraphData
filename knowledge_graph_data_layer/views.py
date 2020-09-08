@@ -17,10 +17,10 @@ KNOWLEDGE_GRAPH_POSITION = "http://52.17.47.46:8080/rdf4j-workbench/repositories
 
 
 def get_query_results(r):
-    json_response = xmltodict.parse(r.content)
-    results = json_response['sparql']['results']['result']
     all_res = []
     try:
+        json_response = xmltodict.parse(r.content)
+        results = json_response['sparql']['results']['result']
         for item in results:
             res_obj = {}
             if item != 'binding':
@@ -39,7 +39,7 @@ def get_query_results(r):
                     res_obj[p[0]] = p[1]
                 all_res.append(res_obj)
     except:
-        print('Unable to parse results')
+        print('Unable to parse results or empty result')
         return []
     return all_res
 
@@ -60,9 +60,7 @@ class QueriesView(View):
             if query == '3':
                 checkin = parameters.get('checkin', None)
                 comune = parameters.get('comune', None)
-                print(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
                 r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
-                print(r)
                 all_res = get_query_results(r)
             elif query == '6':
                 checkin = parameters.get('checkin', None)
@@ -149,11 +147,13 @@ class QueriesView(View):
             else:
                 print('Query not found')
                 status_code = 404
+                response = {'text': 'Sorry, I cannot execute your request.'}
+                return JsonResponse(response, status=status_code)
             print(all_res)
             if len(all_res) > 0:
                 response = {"results": all_res}
             else:
-                response = {'text': 'Sorry, I cannot execute your request.'}
+                response = {'text': 'I have not found any result with these parameters.'}
                 status_code = 404
         except:
             print('Error in call Knowledge Graph server.')
