@@ -60,7 +60,9 @@ class QueriesView(View):
             if query == '3':
                 checkin = parameters.get('checkin', None)
                 comune = parameters.get('comune', None)
+                print(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
                 r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_3(comune, checkin))
+                print(r)
                 all_res = get_query_results(r)
             elif query == '6':
                 checkin = parameters.get('checkin', None)
