@@ -111,6 +111,39 @@ class QueriesView(View):
                 except:
                     print('Failed to parse path number in query 19.')
                     status_code = 500
+            elif query == '25':
+                comune = parameters.get('comune', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_25(comune))
+                all_res = get_query_results(r)
+            elif query == '26':
+                region = parameters.get('region', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_26(region))
+                all_res = get_query_results(r)
+            elif query == '27':
+                equipment = 'true' if parameters.get('info_equipment', None) == 'with equipment' else 'false'
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_27(equipment))
+                all_res = get_query_results(r)
+            elif query == '28':
+                comune = parameters.get('comune', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_28(comune))
+                all_res = get_query_results(r)
+            elif query == '29':
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_29())
+                all_res = get_query_results(r)
+            elif query == '30':
+                subject = parameters.get('subject', None)
+                comune = parameters.get('comune', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_30(subject, comune))
+                all_res = get_query_results(r)
+            elif query == '31':
+                subject = parameters.get('subject', None)
+                region = parameters.get('region', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_31(subject, region))
+                all_res = get_query_results(r)
+            elif query == '32':
+                subject = parameters.get('subject', None)
+                r = requests.get(KNOWLEDGE_GRAPH_POSITION + queries.query_32(subject))
+                all_res = get_query_results(r)
             else:
                 print('Query not found')
                 status_code = 404
@@ -123,7 +156,7 @@ class QueriesView(View):
         except:
             print('Error in call Knowledge Graph server.')
             status_code = 500
-            response = {'text': 'I\'m having trouble in executing your request'}
+            response = {'text': 'I\'m having trouble in executing your request.'}
 
         return JsonResponse(response, status=status_code)
 
